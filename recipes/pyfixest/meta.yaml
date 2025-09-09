@@ -1,0 +1,51 @@
+{% set name = "pyfixest" %}
+{% set version = "0.30.2" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/pyfixest-{{ version }}.tar.gz
+  sha256: 48e16faa9df58c5221945504607f146eddfec38b3d4fb7ce84020d8b53a49b13
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.9
+    - maturin >=1.8,<2.0
+    - pip
+  run:
+    - python >=3.9
+    - scipy >=1.6,<1.16
+    - formulaic >=1.1.0
+    - pandas >=1.1.0
+    - numba >=0.58.0
+    - seaborn >=0.13.2
+    - tabulate >=0.9.0
+    - tqdm >=4.0.0
+    - great_tables >=0.10.0
+    - numpy >=1.25.2
+    - narwhals >=1.13.3
+    - joblib >=1.4.2,<2
+
+test:
+  imports:
+    - pyfixest
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  summary: Fast high dimensional fixed effect estimation following syntax of the fixest R package.
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - s3alfisc
